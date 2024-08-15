@@ -1,21 +1,26 @@
 package main
 
 import (
+	"adr/commands"
 	"log"
 	"os"
 
-	"github.com/urfave/cli"
+	"github.com/urfave/cli/v2"
 )
 
 func main() {
 
-	app := cli.NewApp()
-	app.Name = "adr"
-	app.Usage = "Work with Architecture Decision Records (ADRs)"
-	app.Version = "0.1.0"
+	app := &cli.App{
+		Name:    "adr",
+		Usage:   "Work with Architecture Decision Records (ADRs)",
+		Version: "0.2.0",
+	}
 
-	setFlags(app)
-	setCommands(app)
+	app.Commands = []*cli.Command{
+		&commands.InitCommand,
+		&commands.NewCommand,
+		&commands.TemplatesCommand,
+	}
 
 	err := app.Run(os.Args)
 	if err != nil {
